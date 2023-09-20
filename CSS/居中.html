@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div class="parent">
+      <div class="child1"></div>
+      <span class="child2">我是二号孩子</span>
+    </div>
+  </body>
+  <style>
+    .parent {
+      /* display: flex; */
+      position: relative;
+      width: 500px;
+      height: 500px;
+      background-color: red;
+      /* justify-content: center;
+      align-items: center; */
+      /* 子元素为行内元素，给父元素设置text-align可居中对齐 */
+      text-align: center;
+    }
+    .child1 {
+      /* display: inline; */
+      /* margin: auto;  配合display:flex 可直接水平居中对齐 */
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 200px;
+      height: 200px;
+      background-color: yellow;
+      transform: translate(-50%, -50%);
+    }
+    .child2 {
+      position: absolute;
+      top: 50%;
+      background-color: blue;
+    }
+  </style>
+</html>

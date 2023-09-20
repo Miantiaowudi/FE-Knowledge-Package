@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+</body>
+<script>
+    const a = Promise.resolve(1)
+    const b = Promise.resolve(a)
+    const c = Promise.resolve(2).then(() => a)
+    console.log(a === b);
+    console.log(a === c);
+    console.log(b === c);
+    console.log(a, b, c);
+    b.then((v) => {
+        console.log('b', v);
+    })
+    a.then((v) => {
+        console.log('a', v);
+    })
+    c.then((v) => {
+        console.log('c', v);
+    })
+</script>
+
+</html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+      // 将数组中所有id变为code，所有title变为name
+        const list = [
+        {
+            id: "a",
+            title: "A",
+        },
+        {
+            id: "b",
+            title: "B",
+            children: [
+            {
+                id: "c",
+                title: "C",
+            },
+            {
+                id: "d",
+                title: "D",
+            },
+            ],
+        },
+        ];
+
+        function changeKey(srcObj, changeInfo) {
+        const keys = Object.keys(changeInfo);
+        for (const key in srcObj) {
+            const type = typeof srcObj[key];
+            if (type !== "object" && keys.includes(key)) {
+            const newKey = changeInfo[key];
+            srcObj[newKey] = srcObj[key];
+            delete srcObj[key];
+            } else {
+            srcObj[key].forEach((item) => changeKey(item, changeInfo));
+            }
+        }
+        }
+
+        const changeInfo = {
+        id: "code",
+        title: "name",
+        };
+
+        console.log(list, "before");
+
+        list.forEach((i) => changeKey(i, changeInfo));
+
+        console.log(list, "after");
+    </script>
+</body>
+</html>

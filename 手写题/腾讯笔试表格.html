@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=\, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="container">
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>QQ号码</th>
+                    <th>score</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1</td>
+                    <td>60006</td>
+                    <td>22</td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>20002</td>
+                    <td>11</td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td>30003</td>
+                    <td>66</td>
+                </tr>
+                <tr>
+                    <td>4</td>
+                    <td>10001</td>
+                    <td>33</td>
+                </tr>
+                <tr>
+                    <td>5</td>
+                    <td>50005</td>
+                    <td>44</td>
+                </tr>
+                <tr>
+                    <td>6</td>
+                    <td>40004</td>
+                    <td>55</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+<style>
+    table {
+        border-collapse: collapse;
+        width: 360px;
+        table-layout: fixed;
+    }
+
+    thead {
+        background: #f5f7fa;
+    }
+
+    thead th {
+        font-weight: strong;
+        cursor: pointer;
+    }
+
+    thead th:hover {
+        color: #25bb9b;
+    }
+
+    td,
+    th {
+        border: 1px solid #e1e1e1;
+        padding: 0;
+        text-align: center;
+        padding: 10px 0;
+    }
+</style>
+<script>
+    const order = {
+        init(param) {
+            const that = this;
+            const table = param.el;
+            if (!table) return;
+            // TODO: 获取tbody节点
+            const tbody = table.querySelector("tbody");
+            console.log(tbody)
+            // TODO: 获取所有th节点，并将其转为数组
+            const ths = [...document.querySelectorAll('th')]
+            // TODO: 获取所有tr节点，并将其转为数组
+            const trs = [...document.querySelectorAll('tr')]
+            const list = this.getBodyList(trs);
+            // console.log(list)
+            ths.forEach((th, index) => {
+                // TODO: 请为th绑定点击事件
+                th.addEventListener('click', () => {
+                    // TODO: 判断当前数据是否为升序
+                    const isAsc = this.isAsc(list, index)
+                    // TODO: 如果当前为升序，则将list降序排序；如果当前为降序，则将list升序排序；
+                    list.sort((a, b) => isAsc ? b.value[index] - a.value[index] : a.value[index] - b.value[index]);
+                    // TODO: 将排序后的list重新插入tbody中
+                    trs.forEach((i, index) => {
+                        let n = list[index].value.length
+                        if (index >= 1) {
+                            let string = ''
+                            list[index].value.forEach(item => {
+                                string += `<td>${item}</td>`
+                            })
+                        }
+                        i.innerHTML = string
+                    })
+                })
+            });
+        },
+        getBodyList(trs) {
+            return trs.map(tr => {
+                // TODO: 获取tr的所有td节点，并将其转为数组
+                const tds = [...tr.querySelectorAll('td')];
+                // TODO: 将td的内容转为数字，��换下面0的值
+                const val = tds.map(td => td.innerHTML * 1);
+                return { tr: tr, value: val };
+            });
+        },
+        isAsc(list, index) {
+            // TODO: 判断list的value中第index个值是否为升序排列
+            // const arr = list.sort((a, b) => a[value][index] - b[value][index])
+            return list[1].value[index] - list[2].value[index] < 0
+        }
+    };
+
+    order.init({
+        // TODO: 请获取class=container下的table的节点
+        el: document.querySelector('.container')
+    });
+</script>
+
+</html>

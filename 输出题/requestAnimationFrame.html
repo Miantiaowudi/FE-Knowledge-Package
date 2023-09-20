@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Document</title>
+</head>
+
+<body>
+  <div id="box"></div>
+  <button id='btn'>action</button>
+</body>
+<style>
+  #box {
+    position: fixed;
+    width: 100px;
+    height: 100px;
+    background-color: red;
+    top: 100px;
+    left: 100px
+  }
+</style>
+<script>
+  document.getElementById('btn').onclick = () => {
+    const box = document.getElementById('box')
+    setTimeout(() => {
+      console.log('radius') //5
+      box.style.borderRadius = '50%'
+    }, 0);
+
+    window.requestAnimationFrame(() => {
+      console.log('opacity') // 3
+      box.style.opacity = '0.5'
+    })
+
+    const promise = new Promise((resolve) => {
+      console.log('top')  // 1
+      box.style.top = '200px'
+      resolve()
+    }).then(() => {
+      console.log('left') // 2
+      box.style.left = '200px'
+    })
+
+    window.requestAnimationFrame(() => {
+      console.log('backgroundColor') // 4
+      box.style.backgroundColor = 'blue'
+    })
+  }
+
+</script>
+
+</html>

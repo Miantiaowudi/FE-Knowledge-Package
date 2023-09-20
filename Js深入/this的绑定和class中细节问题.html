@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Document</title>
+</head>
+
+<body></body>
+<script>
+  // a = 1;
+  // let obj1 = {
+  //   a: 2,
+  //   test1: () => {
+  //     console.log(this.a);
+  //   },
+  //   test2: function () {
+  //     // console.log(this);
+  //     return this.a;
+  //   },
+  // };
+  // let obj2 = {
+  //   a: 3,
+  //   test: function () {
+  //     console.log(obj1.test2());
+  //   },
+  // };
+  // obj2.test();
+  class People {
+    constructor(name, age) {
+      debugger;
+      this.name = "222"; //constructor内的后执行
+      this.age = age;
+      this.sayname = this.sayname.bind(this);
+    }
+
+    name = "111";
+    weight = 120;
+    height = 176;
+
+    sayname() {
+      // this.sayage();
+      console.log(this.name);
+    }
+
+    sayage = () => {
+      this.sayname();
+      console.log(this.age);
+    };
+  }
+
+  let p = new People("Zhao", 25);
+  console.log(p);
+</script>
+
+</html>

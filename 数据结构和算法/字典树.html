@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        var Trie = function () {
+            this.trie = { normal: {}, reverse: {} }
+        };
+
+        /**
+         * Inserts a word into the trie. 
+         * @param {string} word
+         * @return {void}
+         */
+        Trie.prototype.insert = function (word) {
+            let node1 = this.trie.normal, node2 = this.trie.reverse
+            for (const s of word) {
+                if (!node1[s]) {
+                    node1[s] = {}
+                }
+                node1 = node1[s]
+            }
+            node1.isEnd = true
+            let word2 = word.split('').reverse().join('')
+            for (const s of word2) {
+                if (!node2[s]) {
+                    node2[s] = {}
+                }
+                node2 = node2[s]
+            }
+            node2.isEnd = true
+        };
+
+        /**
+         * Returns if the word is in the trie. 
+         * @param {string} word
+         * @return {boolean}
+         */
+        Trie.prototype.search = function (word) {
+            let node = this.trie.normal
+            for (const s of word) {
+                if (!node[s]) {
+                    return false
+                }
+                node = node[s]
+            }
+            return !!node.isEnd
+        };
+
+        /**
+         * Returns if the word is in the trie. 
+         * @param {string} prefix
+         * @return {boolean}
+         */
+        Trie.prototype.startsWith = function (prefix) {
+            let node = this.trie.normal
+            for (const s of prefix) {
+                if (!node[s]) {
+                    return false
+                }
+                node = node[s]
+            }
+            return true
+        };
+
+        /**
+         * Returns if the word is in the trie. 
+         * @param {String} suffix
+         * @return {boolean}
+         */
+        Trie.prototype.endsWith = function (suffix) {
+            let node = this.trie.reverse
+            let resuffix = suffix.split('').reverse().join('')
+            for (const s of resuffix) {
+                if (!node[s]) {
+                    return false
+                }
+                node = node[s]
+            }
+            return true
+        }
+
+        Trie.prototype.delete = function (word) {
+            let node1 = this.trie.normal, node2 = this.trie.reverse
+            for (const s of word) {
+                if (!node1[s]) {
+                    return -1
+                }
+                node1 = node1[s]
+            }
+            delete node1.isEnd
+            let word_copy = word
+            //判断一个对象是否为空
+            while (JSON.stringify(node1) === '{}') {
+                if (word_copy === '') {
+                    return
+                }
+                let temp = word_copy[word_copy.length - 1]
+                word_copy = word_copy.slice(0, word_copy.length - 1)
+                node1 = this.trie.normal
+                for (const s of word_copy) {
+                    node1 = node1[s]
+                }
+                delete node1[temp]
+            }
+            let reWord = word.split('').reverse().join('')
+            for (const s of reWord) {
+                if (!node2[s]) {
+                    return -1
+                }
+                node2 = node2[s]
+            }
+            delete node2.isEnd
+            let reword_copy = reWord
+            //判断一个对象是否为空
+            while (JSON.stringify(node2) === '{}') {
+                if (reword_copy === '') {
+                    return
+                }
+                let retemp = reword_copy[reword_copy.length - 1]
+                reword_copy = reword_copy.slice(0, reword_copy.length - 1)
+                node2 = this.trie.reverse
+                for (const s of reword_copy) {
+                    node2 = node2[s]
+                }
+                delete node2[retemp]
+            }
+            return null
+        }
+
+        let trie = new Trie()
+        trie.insert('apple')
+        trie.insert('banana')
+        trie.insert('append')
+        let res = [trie.search('apple'), trie.search('app'), trie.startsWith('app'), trie.endsWith('na'), trie.endsWith('ple')]
+        // console.log(trie)
+        let res1 = [trie.startsWith('ban'), trie.delete('banana'), trie.search('banana'), trie.endsWith('a')]
+        console.log(trie)
+        // console.log(res, res1);
+    </script>
+</body>
+
+</html>

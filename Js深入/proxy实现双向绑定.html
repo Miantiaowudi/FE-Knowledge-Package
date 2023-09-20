@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body></body>
+  <script>
+    // const user = {
+    //   name: "Jake",
+    // };
+    // const proxy = new Proxy(user, {
+    //   get(target, property, receiver) {
+    //     console.log(`Getting ${property}`);
+    //     return Reflect.get(...arguments);
+    //     // return "tom";
+    //   },
+    //   set(target, property, value, receiver) {
+    //     console.log(`Setting ${property}=${value}`);
+    //     return Reflect.set(...arguments);
+    //   },
+    // });
+    // let res = proxy.name;
+    // console.log(res);
+    // proxy.age;
+    // 数据
+    const data = {
+      text: "default",
+    };
+    const input = document.getElementById("input");
+    const span = document.getElementById("span");
+    // 数据劫持 对象名称和文本名称
+    const handler = {
+      set(target, key, vlaue) {
+        // target = 目标对象
+        // prop = 设置的属性
+        // value = 修改后的值
+        target[key] = value;
+        // 数据变化 --&gt; 修改视图
+        input.value = value;
+        span.innerHTML = value;
+        return value;
+      },
+    };
+    // 实现代理
+    const proxy = new Proxy(data, handler);
+
+    // 视图更改 --> 数据变化
+    input.addEventLisener("keyup", function (e) {
+      proxy.text = e.target.value;
+    });
+  </script>
+</html>

@@ -1,0 +1,53 @@
+1. mobx
+2. AMD CMD ES COMMONJS
+3. for 和 forEach 的性能比较
+4. async await 实现
+5. nodeJs
+6. Http 劫持
+7. 平衡二叉树
+8. 为什么只能在最外层写useEffect
+9. tcp 泛洪攻击和拥塞控制
+10.如何解决 0.1 + 0.2 !== 0.3
+11.fixed，生成绝对定位的元素。可定位于相对于浏览器窗口的指定坐标。但当祖先元素具有transform属性且不为none时，就会相对于祖先元素指定坐标，而不是浏览器窗口。
+12.flex “品”字布局
+13.怎么给没有生成的元素绑定事件？
+14.DOMContentloaded和window.onload
+15.为什么js是单线程
+16.浏览器多个标签页之间的通信
+17.<!DOCTYPE html> 作用
+18.XHTML HTML XML 区别
+19.25匹马，5个赛道，只有名次没有时间，几次比赛能拿出前三名？前五名？
+20.100万人年龄排序
+21.Etag的计算方法
+22.
+
+
+
+
+3.
+const lazyman = function (name) {
+  console.log(name)
+  return {
+    executeChain: Promise.resolve(),
+    eat,
+    sleep
+  }
+};
+ 
+const eat = function (food) {
+  this.executeChain = this.executeChain.then(() => new Promise(resolve => {
+    console.log(food);
+    resolve();
+  }))
+  return this;
+}
+ 
+const sleep = function (time) {
+  this.executeChain = this.executeChain.then(() => new Promise(resolve => {
+    setTimeout(() => {
+      resolve();
+      console.log(time);
+    }, time)
+  }))
+  return this;
+}

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="test"></div>
+    <span class="test"></span>
+    <p class="test"></p>
+</body>
+<script>
+    //箭头函数和普通函数的区别：
+    // 1.箭头函数内部没有自身的this对象 
+    // 2.箭头函数不能用作生成器函数和构造函数 
+    // 3.箭头函数内部没有arguments
+
+    const add = (a, b) => {
+        console.log(arguments) //Uncaught ReferenceError: arguments is not defined
+    }
+    // add(1, 2)
+
+    function plus(a, b) {
+        console.log(arguments, typeof arguments) //'object'
+
+        //类数组的两个属性，不能够调用数组的遍历方法
+        console.log(arguments.callee, arguments.length)
+
+        console.log([...arguments], Array.from(arguments))
+
+        //ES5的方法将类数组转化为数组
+        console.log(Array.prototype.slice.call(arguments), [].slice.call(arguments))
+
+    }
+    console.log(typeof plus) // 'function'
+
+    plus(1, 2)
+
+    const node = document.getElementsByClassName('test')
+    console.log(node, typeof node, Array.from(node))
+
+</script>
+
+</html>

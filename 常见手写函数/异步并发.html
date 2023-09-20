@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      const tasks = [
+        () =>
+          new Promise((resolve) =>
+            setTimeout(() => {
+              resolve(21);
+            }, 2100)
+          ),
+        () =>
+          new Promise((resolve) =>
+            setTimeout(() => {
+              resolve(15);
+            }, 1500)
+          ),
+        () =>
+          new Promise((_, reject) =>
+            setTimeout(() => {
+              reject(10);
+            }, 1000)
+          ),
+        () =>
+          new Promise((resolve) =>
+            setTimeout(() => {
+              resolve(6);
+            }, 600)
+          ),
+        () =>
+          new Promise((_, reject) =>
+            setTimeout(() => {
+              reject(3);
+            }, 300)
+          ),
+        () =>
+          new Promise((resolve) =>
+            setTimeout(() => {
+              resolve(1);
+            }, 100)
+          ),
+        () =>
+          new Promise((_, reject) =>
+            setTimeout(() => {
+              reject(0);
+            }, 0)
+          ),
+      ];
+
+      function handleFetchQueue(tasks, max) {
+        const taskCount = tasks.length;
+        // const requestsQueue = [];
+        let requestNum = 0;
+        const results = { resolve: [], reject: [] };
+        let i = 0;
+        const handleRequest = (task) => {
+          // console.log(task, results.slice(), requestNum);
+          console.log(task);
+          task()
+            .then((res) => {
+              results.resolve.push(res);
+            })
+            .catch((e) => {
+              results.reject.push(e);
+            })
+            .finally(() => {
+              // 完成请求就出队
+              // requestsQueue.shift();
+              requestNum--;
+              if (i < taskCount - 1) {
+                handleRequest(tasks[++i]);
+              }
+            });
+          // requestsQueue.push(req);
+          requestNum++;
+          // 只要满足就继续请求
+          if (requestNum < max) {
+            handleRequest(tasks[++i]);
+          }
+        };
+        handleRequest(tasks[i]);
+        setTimeout(() => {
+          console.log(results, requestNum);
+        }, 4000);
+      }
+      handleFetchQueue(tasks, 3);
+    </script>
+  </body>
+</html>
